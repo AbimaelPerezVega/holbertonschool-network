@@ -4,9 +4,11 @@
 sudo cp /etc/hosts /etc/hosts.bak
 
 # Modify localhost entry
-sudo sed -i 's/^127.0.0.1.*/127.0.0.2 localhost/' /etc/hosts
+sudo sed -i '/127.0.0.1\s*localhost/d' /etc/hosts
+sudo sed -i '/facebook.com/d' /etc/hosts
 
 # Modify facebook.com entry
-sudo sed -i 's/^.*facebook.com.*/8.8.8.8 facebook.com/' /etc/hosts
+echo "127.0.0.2 localhost" | sudo tee -a /etc/hosts > /dev/null
+echo "8.8.8.8 facebook.com" | sudo tee -a /etc/hosts > /dev/null
 
-echo "Hosts file modified successfully. Check changes using 'ping localhost' and 'ping facebook.com'."
+echo "Host resolution updated: localhost -> 127.0.0.2, facebook.com -> 8.8.8.8"
